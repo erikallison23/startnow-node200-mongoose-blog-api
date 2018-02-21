@@ -57,11 +57,9 @@ describe('/api/blogs', function () {
     it('POST / should save a new blog to the database when userId passed in body', (done) => {
         createUserInDB().then(user => {
             chai.request(app)
-                .post('/api/blogs')
-                .send({ 
-                    authorId: user._id,
-                    ...fakeBlogs[1]
-                })
+                .post(`/api/blogs?userId=${user._id}`)
+                .send(fakeBlogs[1])
+                
                 .end((err, res) => {
                     expect(res).to.have.status(201);
                     expect(res.body).to.not.be.null;
@@ -76,7 +74,7 @@ describe('/api/blogs', function () {
                             expect(err).to.be.null;
                             expect(res.body._id).to.exist;
                             expect(res.body._id).to.equal(savedBlogId);
-                            expect(res.body.author._id).to.equal(String(user._id));
+                            expect(res.body.author).to.equal(String(user._id));
 
                             done();
                         });
