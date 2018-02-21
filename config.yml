@@ -1,0 +1,8 @@
+deployment:
+  prod:
+    branch: master
+    heroku:
+      appname: ea-mongooseblogapi
+machine:
+  node:
+    version: 8.1.4
